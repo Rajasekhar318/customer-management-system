@@ -10,9 +10,16 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/customers', customerRoutes);
 
+// Root Route
+app.get('/', (req, res) => {
+  res.send('Welcome to the Customer Management System API');
+});
+
+// Sync Database
 sequelize.sync();
 
 module.exports = app;

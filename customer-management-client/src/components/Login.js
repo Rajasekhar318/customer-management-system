@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import API from '../services/api';
 
-function Login() {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -9,10 +9,11 @@ function Login() {
     e.preventDefault();
     try {
       const { data } = await API.post('/auth/login', { email, password });
-      localStorage.setItem('token', data.token);
+      localStorage.setItem('token', data.token); // Store token in localStorage
+      onLogin(); // Notify parent component about login
       alert('Login successful!');
     } catch (error) {
-      alert('Invalid credentials');
+      alert('Login failed: ' + (error.response?.data?.error || 'Unknown error'));
     }
   };
 
